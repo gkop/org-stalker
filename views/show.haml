@@ -1,9 +1,20 @@
 !!!
 %html
   %head
-    %title #{@account}
+    %title #{env['account']}
     %meta{:charset => "utf-8"}
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     %script{:src => "/app.js"}
   %body
-    %h1= @account
+    %h1 #{env['account']} Members
+
+    %ul
+      - env['users'].each do |u|
+        %li #{u['login']} from #{u['location']}
+
+    %h1 API calls
+
+    %ul
+      - env['api_calls'].each do |c|
+        %li
+          #{c[:name]}, #{c[:num_requests]} calls in #{c[:total_time].round(3)} seconds
