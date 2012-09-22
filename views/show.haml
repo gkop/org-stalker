@@ -1,12 +1,9 @@
 !!!
 %html
   %head
-    %title Chat
+    %title #{@account}
     %meta{:charset => "utf-8"}
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     %script{:src => "/app.js"}
   %body
-    %form
-      %label User or organization name
-      %input#account
-      %input#submit{:type => "submit", :value => "Go"}
+    %h1= @account
