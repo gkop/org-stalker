@@ -65,4 +65,5 @@ class Hubgit < Goliath::API
       y['created_at'] <=> x['created_at']
     end
   end
+
 end

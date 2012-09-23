@@ -1,0 +1,8 @@
+.element
+  .date
+    #{Time.parse(event['created_at']).strftime('%d of %b, %Y')}
+    #{Time.parse(event['created_at']).strftime('%R')}
+  .avatar
+    %img{:src => "#{event['actor']['avatar_url']}&s=50"}
+  .text
+    = haml("events/#{event['type']}".snake_case.sub(/_event\z/, '').to_sym, :locals => {:event => event})
