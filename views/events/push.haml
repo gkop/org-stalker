@@ -1,8 +1,9 @@
 %p
   %a{:href => "http://github.com/#{event['actor']['login']}"}=event["actor"]["login"]
   pushed
-  ="#{event['payload']['commits'].size}"
-  commits
+  -if event['payload']['commits']
+    =event['payload']['commits'].size
+    commits
   to
   %a{:href => "http://github.com/#{event['repo']['name']}"}=event["repo"]["name"]
 

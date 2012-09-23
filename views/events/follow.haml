@@ -1,1 +1,11 @@
-%b FOLLOW
+%p
+  =event["actor"]["login"]
+  is following
+  =event["payload"]["target"]["name"]
+  (#{event["payload"]["target"]["login"]})
+  from
+  =event["payload"]["target"]["company"]
+
+%img{:src => "#{event["payload"]['target']['avatar_url']}&s=50"}
+
+
