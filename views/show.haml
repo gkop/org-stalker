@@ -7,21 +7,20 @@
     %script{:src => "/app.js"}
     %link{:rel => "stylesheet", :href => "/app.css"}
   %body
-    %h1 #{env['account']} Activity
-    %ul
+    .content
+      %h1 #{env['account']} Activity
       - env['events'].each do |e|
-        %li
-          = haml("shared/feed_element".to_sym, :locals => {:event => e})
+        = haml("shared/feed_element".to_sym, :locals => {:event => e})
 
-    %h1 #{env['account']} Members
+      %h1 #{env['account']} Members
 
-    %ul
-      - env['users'].each do |u|
-        %li #{u['login']}
+      %ul
+        - env['users'].each do |u|
+          %li #{u['login']}
 
-    %h1 API calls
+      %h1 API calls
 
-    %ul
-      - env['api_calls'].each do |c|
-        %li
-          #{c[:name]}, #{c[:num_requests]} calls in #{c[:total_time].round(3)} seconds
+      %ul
+        - env['api_calls'].each do |c|
+          %li
+            #{c[:name]}, #{c[:num_requests]} calls in #{c[:total_time].round(3)} seconds

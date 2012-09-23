@@ -1,8 +1,8 @@
 .element
-  .date
+  .date.column1
     #{Time.parse(event['created_at']).strftime('%d of %b, %Y')}
     #{Time.parse(event['created_at']).strftime('%R')}
-  .avatar
+  .avatar.column2
     %img{:src => "#{event['actor']['avatar_url']}&s=50"}
-  .text
+  .text.column3
     = haml("events/#{event['type']}".snake_case.sub(/_event\z/, '').to_sym, :locals => {:event => event})
