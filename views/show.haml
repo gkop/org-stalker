@@ -6,11 +6,18 @@
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     %script{:src => "/app.js"}
   %body
+    %h1 #{env['account']} Activity
+    %ul
+      - env['events'].each do |e|
+        %li
+          #{e['created_at']}:
+          = haml("events/#{e['type']}".snake_case.sub(/_event\z/, '').to_sym)
+
     %h1 #{env['account']} Members
 
     %ul
       - env['users'].each do |u|
-        %li #{u['login']} from #{u['location']}
+        %li #{u['login']}
 
     %h1 API calls
 

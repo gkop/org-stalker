@@ -16,17 +16,19 @@ class Hubgit < Goliath::API
 
     if http.response
       users = JSON.parse(http.response)
+      env['users'] = users
       multi = EM::Synchrony::Multi.new
 
       users.each do |u|
-        multi.add(u['login'], EM::HttpRequest.new(u['url']).aget)
+        multi.add("#{u['login']}_events".to_sym,
+                  EM::HttpRequest.new(u['url']+"/events").aget)
       end
+      url = "https://api.github.com/orgs/#{account}/events"
+      multi.add(:org_events, EM::HttpRequest.new(url).aget)
       res = logged_api_call(:users, users.size) do
         multi.perform
       end
-      env['users'] = multi.responses[:callback].map do |response|
-        JSON.parse(response[1].response)
-      end
+      env['events'] = format_events(multi.responses[:callback])
       [200, {}, haml(:show)]
     end
   end
@@ -56,5 +58,11 @@ class Hubgit < Goliath::API
   def log_api_call(name, n, duration)
     env['api_calls'] ||= []
     env['api_calls'] << {:name => name, :num_requests => n, :total_time => duration}
+  end
+
+  def format_events(responses)
+    responses.map {|r| JSON.parse(r[1].response)}.flatten.uniq.sort do |x,y|
+      y['created_at'] <=> x['created_at']
+    end
   end
 end
