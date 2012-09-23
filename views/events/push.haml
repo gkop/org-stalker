@@ -12,4 +12,4 @@
         %li
           %a{:href => c["url"].sub(/api\.github\.com\/repos/, 'github.com').sub(/commits/, 'commit')}<
             =c["sha"][0..6]
-          = c["message"]
+          = CGI::escapeHTML(c["message"])
