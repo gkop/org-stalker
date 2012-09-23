@@ -40,6 +40,9 @@ class Hubgit < Goliath::API
     elsif env['REQUEST_PATH'] == '/app.js'
       # app javascript
       [200, {'Content-Type' => 'application/javascript'}, coffee(:app)]
+    elsif env['REQUEST_PATH'] == '/app.css'
+      # app stylesheet
+      [200, {'Content-Type' => 'text/css'}, sass(:app)]
     elsif (r = env['REQUEST_PATH'].match /\A\/([^\/]*)/).size > 1
       # show the org or user
       show(r[1])
