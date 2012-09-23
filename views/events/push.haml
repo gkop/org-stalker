@@ -1,10 +1,17 @@
 %p
-  %a{:href => "http://github.com/#{event['actor']['login']}"}=event["actor"]["login"]
-  pushed
-  -if event['payload']['commits']
-    =event['payload']['commits'].size
-    commits
-  to
-  %a{:href => "http://github.com/#{event['repo']['name']}"}=event["repo"]["name"]
+  %a{:href => "https://github.com/#{event['actor']['login']}"}<
+    =event["actor"]["login"]
+  pushed to #{event['payload']['ref'].match(/\Arefs\/heads\/(.*)\z/)[1]}
+  at
+  %a{:href => "https://github.com/#{event['repo']['name']}"}
+    =event["repo"]["name"]
+
+  - if event["payload"]["commits"].any?
+    %ul
+      - event["payload"]["commits"].each do |c|
+        %a{:href => c["url"].sub(/api\.github\.com\/repos/, 'github.com')}<
+          =c["sha"][0..6]
+        = c["message"]
+
 
 
