@@ -25,7 +25,7 @@ class Hubgit < Goliath::API
       end
       url = "https://api.github.com/orgs/#{account}/events"
       multi.add(:org_events, EM::HttpRequest.new(url).aget)
-      res = logged_api_call(:users, users.size) do
+      res = logged_api_call(:events, users.size+1) do
         multi.perform
       end
       env['events'] = format_events(multi.responses[:callback])
@@ -64,7 +64,9 @@ class Hubgit < Goliath::API
   end
 
   def format_events(responses)
-    responses.map {|r| JSON.parse(r[1].response)}.flatten.uniq.sort do |x,y|
+    responses.map {|r| JSON.parse(r[1].response)}.flatten.uniq.reject do |e|
+      Date.parse(e['created_at']) < Date.today - 30
+    end.sort do |x,y|
       y['created_at'] <=> x['created_at']
     end
   end
