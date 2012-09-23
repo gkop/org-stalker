@@ -11,7 +11,7 @@
       - env['events'].each do |e|
         %li
           #{e['created_at']}:
-          = haml("events/#{e['type']}".snake_case.sub(/_event\z/, '').to_sym)
+          = haml("events/#{e['type']}".snake_case.sub(/_event\z/, '').to_sym, :locals => {:event => e})
 
     %h1 #{env['account']} Members
 
