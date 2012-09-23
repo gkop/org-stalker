@@ -1,1 +1,8 @@
-%b COMMIT COMMENT
+%p
+  =event['actor']['login']
+  commented on
+  =event['repo']['name']
+%p.comment
+  =event['payload']['comment']['body'][0..200]
+  %a{:href => event['payload']['comment']['html_url']} Read more
+

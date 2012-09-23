@@ -8,7 +8,7 @@
     %link{:rel => "stylesheet", :href => "/app.css"}
   %body
     .content
-      %h1 #{env['account']} Activity
+      %h1.main_header HackerFeed for #{env['account']}
       - env['events'].each do |e|
         = haml("shared/feed_element".to_sym, :locals => {:event => e})
 

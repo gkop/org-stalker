@@ -1,1 +1,5 @@
-%b MEMBER
+-if event["payload"]["action"] == "added"
+  #{event["payload"]["member"]["login"]} was just added to #{event["repo"]["name"]} by #{event["actor"]["login"]}
+  .avatar
+    %img{:src => "#{event["payload"]['member']['avatar_url']}&s=50", :class => 'avatar-img'}
+
