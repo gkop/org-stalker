@@ -2,7 +2,7 @@ require 'bundler/setup'
 Bundler.require
 require 'em-synchrony/em-http'
 
-class Hubgit < Goliath::API
+class OrgStalker < Goliath::API
 	# render templated files from ./views
 	include Goliath::Rack::Templates
 

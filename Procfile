@@ -1,1 +1,1 @@
-web: bundle exec ruby hubgit.rb -sv -e prod -p $PORT
+web: bundle exec ruby org_stalker.rb -sv -e prod -p $PORT
