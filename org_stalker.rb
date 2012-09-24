@@ -18,7 +18,6 @@ class OrgStalker < Goliath::API
       users = JSON.parse(http.response)
       env['users'] = users
       multi = EM::Synchrony::Multi.new
-
       users.each do |u|
         multi.add("#{u['login']}_events".to_sym,
                   EM::HttpRequest.new(u['url']+"/events").aget)
@@ -30,6 +29,7 @@ class OrgStalker < Goliath::API
       end
       env['events'] = format_events(multi.responses[:callback])
       env['statistics'] = get_stat(env['events'])
+
       [200, {}, haml(:show)]
     end
   end
