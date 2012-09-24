@@ -1,1 +1,10 @@
-%b ISSUE COMMENT
+%p
+  =event['payload']['comment']['user']['login']
+  commented on issue
+  %a{:href => event['payload']['issue']['html_url']}
+    "#{event['payload']['issue']['title']}"
+  @
+  %a{:href => "github.com/#{event['repo']['name']}"}
+    =event['repo']['name']
+%p.comment
+  =event['payload']['comment']['body']
