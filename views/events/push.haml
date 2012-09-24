@@ -9,7 +9,7 @@
   - if event["payload"]["commits"].any?
     %ul
       - event["payload"]["commits"].each do |c|
-        %li
+        %li.comment
           %a{:href => c["url"].sub(/api\.github\.com\/repos/, 'github.com').sub(/commits/, 'commit')}<
             =c["sha"][0..6]
           = CGI::escapeHTML(c["message"])

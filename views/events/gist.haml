@@ -1,1 +1,7 @@
-%b GIST
+%p
+  -if event['payload']['action'] == 'update'
+    #{event['actor']['login']} just updated
+    %a{:href => event['payload']['gist']['html_url']} #{event['payload']['gist']['description']}-GIST
+  -if event['payload']['action'] == 'create'
+    #{event['actor']['login']} just created
+    %a{:href => event['payload']['gist']['html_url']} #{event['payload']['gist']['description']}-GIST

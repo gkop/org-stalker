@@ -9,6 +9,9 @@
   %body
     .content
       %h1.main_header HackerFeed for #{env['account']}
+
+      = haml("users/users".to_sym, :locals => {:users => env['users']})
+
       - env['events'].each do |e|
         = haml("shared/feed_element".to_sym, :locals => {:event => e})
 

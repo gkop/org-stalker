@@ -1,0 +1,4 @@
+.avatar_list
+  -users.each do |u|
+    %a{:href => "https://github.com/#{u['login']}"}
+      %img{:src => "#{u['avatar_url']}&s=30", :title => u['login']}
