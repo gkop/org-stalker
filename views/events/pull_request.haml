@@ -1,1 +1,5 @@
-%b PULL REQUEST
+%p
+  #{actor} made a pull request
+  %a{:href => event['payload']['pull_request']['html_url']}
+    =event['payload']['pull_request']['title']
+  concerning #{repo}

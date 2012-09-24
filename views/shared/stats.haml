@@ -1,0 +1,14 @@
+-maximum = 0
+-env['statistics'].each do |key,value|
+  -maximum = value if value > maximum
+-pixel=100.0/maximum
+
+.statistics
+  -env['statistics'].each do |key,value|
+    .stat-block
+      .chart-wrap
+        .chart{:style => "height: #{value*pixel}px;"}
+      .key
+        =key
+      .value
+        =value

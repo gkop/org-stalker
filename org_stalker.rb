@@ -29,6 +29,7 @@ class OrgStalker < Goliath::API
         multi.perform
       end
       env['events'] = format_events(multi.responses[:callback])
+      env['statistics'] = get_stat(env['events'])
       [200, {}, haml(:show)]
     end
   end
@@ -69,6 +70,19 @@ class OrgStalker < Goliath::API
     end.sort do |x,y|
       y['created_at'] <=> x['created_at']
     end
+  end
+
+  def get_stat(events)
+
+    statistics = {}
+
+    events.each do |e|
+      key = e['type'].snake_case.sub(/_event\z/, '').to_sym
+      statistics[key] = statistics.has_key?(key) ? statistics[key] + 1 : 1
+    end
+
+    statistics
+
   end
 
 end

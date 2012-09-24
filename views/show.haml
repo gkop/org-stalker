@@ -10,8 +10,14 @@
     .content
       %h1.main_header HackerFeed for #{env['account']}
 
+      -# Output all users
       = haml("users/users".to_sym, :locals => {:users => env['users']})
+      -# Output all statistics
+      = haml("shared/stats".to_sym, :locals => {:users => env['users']})
 
+
+
+      -# output feed
       - env['events'].each do |e|
         -actor = e.has_key?('actor') ? e['actor']['login'] : "no_actor"
         -repo = e.has_key?('repo') ? e['repo']['name'] : "no_repo"
