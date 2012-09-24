@@ -1,1 +1,11 @@
-%b DELETE
+%p
+  %a{:href => "/github.com/#{event['actor']['login']}"}
+    #{event['actor']['login']}
+  deleted a #{event['payload']['ref_type']}
+  "#{event['payload']['ref']}"
+  @
+  %a{:href => "/github.com/#{event['repo']['name']}"}
+    #{event['repo']['name']}
+
+%p.comment
+  #{event['payload']['description']}

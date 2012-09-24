@@ -1,1 +1,13 @@
-%b ISSUES
+%p
+  The issue
+  %a{:href => event['payload']['issue']['html_url']}
+    #{event['payload']['issue']['title']}
+  was #{event['payload']['action']} by
+  %a{:href => "github.com/#{event['actor']['login']}"}
+    #{event['actor']['login']}
+  for
+  %a{:href => "github.com/#{event['repo']['name']}"}
+    #{event['repo']['name']}
+
+%p.comment
+  #{event['payload']['issue']['body']}
