@@ -1,1 +1,4 @@
-%b WATCH
+%p
+  #{actor} #{event['payload']['action']} watching
+  %a{:href => "/github.com/#{event['repo']['name']}"}
+    #{event['repo']['name']}

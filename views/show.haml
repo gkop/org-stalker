@@ -13,7 +13,9 @@
       = haml("users/users".to_sym, :locals => {:users => env['users']})
 
       - env['events'].each do |e|
-        = haml("shared/feed_element".to_sym, :locals => {:event => e})
+        -actor = e.has_key?('actor') ? e['actor']['login'] : "no_actor"
+        -repo = e.has_key?('repo') ? e['repo']['name'] : "no_repo"
+        = haml("shared/feed_element".to_sym, :locals => {:actor => actor, :event => e, :repo => repo})
 
       %h1 #{env['account']} Members
 
