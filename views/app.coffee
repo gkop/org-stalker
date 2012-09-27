@@ -6,6 +6,8 @@ window.showElements = ->
     action = "element"
   if window.user_shown
     user = "[data-user='" + window.user_shown + "']"
+  else
+    user = ""
   q = "." + action + user
   $(q).show(0);
 
