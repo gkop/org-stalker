@@ -5,7 +5,7 @@
 
 .statistics
   -env['statistics'].each do |key,value|
-    .stat-block
+    .stat-block{'data-action' => key}
       .chart-wrap
         .chart{:style => "height: #{value*pixel}px;"}
       .key

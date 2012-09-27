@@ -1,4 +1,4 @@
-.element
+.element{:class => event['type'].snake_case.sub(/_event\z/, '').to_sym, 'data-user' => actor}
   .date.column1
     #{Time.parse(event['created_at']).strftime('%d of %b, %Y')}
     #{Time.parse(event['created_at']).strftime('%R')}
