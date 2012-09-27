@@ -4,34 +4,36 @@
     %title #{env['account']}
     %meta{:charset => "utf-8"}
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
+    %script{:src => "http://masonry.desandro.com/jquery.masonry.min.js"}
     %script{:src => "/app.js"}
     %link{:rel => "stylesheet", :href => "/app.css"}
   %body
-    .content
-      %h1.main_header HackerFeed for #{env['account']}
+    %h1.main_header HackerFeed for #{env['account']}
 
-      -# Output all users
-      = haml("users/users".to_sym, :locals => {:users => env['users']})
-      -# Output all statistics
-      = haml("shared/stats".to_sym, :locals => {:users => env['users']})
-
+    -# Output all users
+    = haml("users/users".to_sym, :locals => {:users => env['users']})
+    -# Output all statistics
+    = haml("shared/stats".to_sym, :locals => {:users => env['users']})
 
 
-      -# output feed
-      - env['events'].each do |e|
+
+    -# output feed
+    .all_events
+      - env['events'].each_with_index do |e, i|
         -actor = e.has_key?('actor') ? e['actor']['login'] : "no_actor"
         -repo = e.has_key?('repo') ? e['repo']['name'] : "no_repo"
-        = haml("shared/feed_element".to_sym, :locals => {:actor => actor, :event => e, :repo => repo})
+        = haml("shared/feed_element".to_sym, :locals => {:actor => actor, :event => e, :repo => repo, :number => i})
 
-      %h1 #{env['account']} Members
+    %h1 #{env['account']} Members
 
-      %ul
-        - env['users'].each do |u|
-          %li #{u['login']}
+    %ul
+      - env['users'].each do |u|
+        %li #{u['login']}
 
-      %h1 API calls
+    %h1 API calls
 
-      %ul
-        - env['api_calls'].each do |c|
-          %li
-            #{c[:name]}, #{c[:num_requests]} calls in #{c[:total_time].round(3)} seconds
+    %ul
+      - env['api_calls'].each do |c|
+        %li
+          #{c[:name]}, #{c[:num_requests]} calls in #{c[:total_time].round(3)} seconds
+

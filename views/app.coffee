@@ -1,5 +1,7 @@
 window.showElements = ->
-  $(".element").hide(500)
+  $(".element").css("background", "none")
+  $(".element").css("color", "#00ff1a")
+  $(q).find("a").css("color", "#00ff1a")
   if window.action_shown
     action = window.action_shown
   else
@@ -9,10 +11,14 @@ window.showElements = ->
   else
     user = ""
   q = "." + action + user
-  $(q).show(0);
+  $(q).css("background", "#00ff1a")
+  $(q).css("color", "black")
+  $(q).find("a").css("color", "black")
 
 
 $(document).ready ->
+
+  $(".all_events").masonry itemSelector: ".element"
 
   $("#submit").click ->
     account = $("#account").val()
