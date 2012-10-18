@@ -8,7 +8,8 @@ class OrgStalker < Goliath::API
 
   def show(account)
     env['account'] = account
-    url = "https://api.github.com/orgs/#{account}/members"
+    url = add_auth_params(
+            "https://api.github.com/orgs/#{account}/public_members")
 
     http = logged_api_call(:organization, 1) do
       EM::HttpRequest.new(url).get
@@ -16,18 +17,23 @@ class OrgStalker < Goliath::API
 
     if http.response
       users = JSON.parse(http.response)
+      if users.is_a?(Hash) && users["message"]
+        return [200, {}, "Github API error: #{users["message"]}"]
+      end
+
       env['users'] = users
       multi = EM::Synchrony::Multi.new
       users.each do |u|
         multi.add("#{u['login']}_events".to_sym,
-                  EM::HttpRequest.new(u['url']+"/events").aget)
+                  EM::HttpRequest.new(add_auth_params(u['url']+"/events")).aget)
       end
-      url = "https://api.github.com/orgs/#{account}/events"
+      url = add_auth_params("https://api.github.com/orgs/#{account}/events")
       multi.add(:org_events, EM::HttpRequest.new(url).aget)
       res = logged_api_call(:events, users.size+1) do
         multi.perform
       end
       env['events'] = format_events(multi.responses[:callback])
+      return env['events'] if env['events'][0] == 200
       env['statistics'] = get_stat(env['events'])
 
       [200, {}, haml(:show)]
@@ -66,6 +72,9 @@ class OrgStalker < Goliath::API
 
   def format_events(responses)
     responses.map {|r| JSON.parse(r[1].response)}.flatten.uniq.reject do |e|
+      if e.is_a?(Hash) && e["message"]
+        return [200, {}, "Github API error: #{e["message"]}"]
+      end
       Date.parse(e['created_at']) < Date.today - 30
     end.sort do |x,y|
       y['created_at'] <=> x['created_at']
@@ -83,6 +92,14 @@ class OrgStalker < Goliath::API
 
     statistics
 
+  end
+
+  def add_auth_params(url)
+    if ENV['GH_CLIENT_ID'] && ENV['GH_CLIENT_SECRET']
+      "#{url}?client_id=#{ENV["GH_CLIENT_ID"]}&client_secret=#{ENV["GH_CLIENT_SECRET"]}"
+    else
+      url
+    end
   end
 
 end
