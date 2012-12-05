@@ -1,1 +1,5 @@
-#config['channel'] = EM::Channel.new
+config[:template_engines] = {
+  :haml => {
+    :escape_html   => true
+  }
+}

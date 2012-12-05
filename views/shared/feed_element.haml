@@ -8,4 +8,4 @@
     .avatar-wrap
       %img{:src => "#{event['actor']['avatar_url']}&s=50"}
   .text
-    = haml("events/#{event['type']}".snake_case.sub(/_event\z/, '').to_sym, :locals => {:event => event, :actor => actor, :repo => repo})
+    != haml("events/#{event['type']}".snake_case.sub(/_event\z/, '').to_sym, :locals => {:event => event, :actor => actor, :repo => repo})

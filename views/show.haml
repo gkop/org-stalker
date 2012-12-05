@@ -13,9 +13,9 @@
     %h1.main_header HackerFeed for #{env['account']}
 
     -# Output all users
-    = haml("users/users".to_sym, :locals => {:users => env['users']})
+    != haml("users/users".to_sym, :locals => {:users => env['users']})
     -# Output all statistics
-    = haml("shared/stats".to_sym, :locals => {:users => env['users']})
+    != haml("shared/stats".to_sym, :locals => {:users => env['users']})
 
 
 
@@ -24,7 +24,7 @@
       - env['events'].each_with_index do |e, i|
         -actor = e.has_key?('actor') ? e['actor']['login'] : "no_actor"
         -repo = e.has_key?('repo') ? e['repo']['name'] : "no_repo"
-        = haml("shared/feed_element".to_sym, :locals => {:actor => actor, :event => e, :repo => repo, :number => i})
+        != haml("shared/feed_element".to_sym, :locals => {:actor => actor, :event => e, :repo => repo, :number => i})
 
     %h1 #{env['account']} Members
 
