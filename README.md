@@ -4,7 +4,7 @@ Aggregates the public activity of a Github organization and its members into a s
 
 # Demo
 
-[http://www.org-stalker.com/coshx](http://www.org-stalker.com/coshx)
+[https://org-stalker.herokuapp.com/coshx](https://org-stalker.herokuapp.com/coshx)
 
 # Running
 To run the app:
